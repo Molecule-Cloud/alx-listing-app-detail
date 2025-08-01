@@ -1,0 +1,15 @@
+@import 'tailwindcss';
+
+@source "./*.html";
+@source "./src/**/*.{html.js}";
+
+
+@layer components {
+  @media (max-width: 768px) {
+    .container {
+      width: 100%;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+}
