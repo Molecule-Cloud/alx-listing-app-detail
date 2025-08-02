@@ -377,3 +377,32 @@ export const FILTERS = [
   "Filter",
   "Sort by: Highest Price"
 ];
+
+export const SAMPLE_REVIEWS = [
+  {
+    name: "Sarah Johnson",
+    avatar: "",
+    rating: 5,
+    comment: "This is a comment",
+    date: "March 2024"
+  },
+
+  {
+    name: "Sarah Johnson",
+    avatar: "",
+    rating: 5,
+    comment: "This is a comment",
+    date: "March 2024"
+  },
+  
+  {
+    name: "Sarah Johnson",
+    avatar: "",
+    rating: 5,
+    comment: "This is a comment",
+    date: "March 2024"
+  }
+]
+
+
+

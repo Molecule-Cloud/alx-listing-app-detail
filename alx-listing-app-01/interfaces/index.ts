@@ -16,3 +16,17 @@ export interface PropertyProps {
   image: string;
   discount: string;
 }
+
+export interface Description extends PropertyProps {
+  description: string;
+}
+
+
+export interface reviews{
+  id: string;
+  name: string;
+  avatar: string;
+  rating: number;
+  comment: string;
+  date?: string;
+}
