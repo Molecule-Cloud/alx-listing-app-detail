@@ -1,66 +1,46 @@
-import Image from "next/image";
+import { SAMPLE_REVIEWS } from "@/constants";
+import { Star } from "lucide-react";
 
-const ReviewSection: React.FC<{ reviews: any[] }> = ({ reviews }) => {
-  // YOUR CHALLENGE: Create a function to render star ratings
-  const renderStars = (rating: number) => {
-    const stars = [];
-    for (let i = 1; i <= 5; i++) {
-      stars.push(
-        <span key={i} className={i <= rating ? "text-yellow-400" : "text-gray-300"}>
-          ★
-        </span>
-      );
-    }
-    return stars;
-  };
 
-  // Handle empty reviews
-  if (!reviews || reviews.length === 0) {
-    return (
-      <div className="mt-8">
-        <h3 className="text-2xl font-semibold mb-4">Reviews</h3>
-        <p className="text-gray-500">No reviews yet. Be the first to review!</p>
-      </div>
-    );
-  }
+
+const ReviewSection: React.FC<{ reviews?: any[] }> = ({ reviews }) => {
+  const displayReviews = reviews && reviews.length > 0 ? reviews : SAMPLE_REVIEWS;
 
   return (
-    <div className="mt-8">
-      <h3 className="text-2xl font-semibold mb-6">Reviews ({reviews.length})</h3>
-      
-      <div className="space-y-6">
-        {reviews.map((review, index) => (
-          <div key={index} className="border-b border-gray-200 pb-6 last:border-b-0">
+    <div>
+      {/* Reviews Header */}
+      <div className="flex items-center space-x-2 mb-6">
+        <Star className="w-5 h-5 text-yellow-500 fill-current" />
+        <span className="text-lg font-semibold">4.76</span>
+        <span className="text-gray-600">( 345 reviews )</span>
+      </div>
+
+      {/* Reviews Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-1 gap-8">
+        {displayReviews.slice(0, 4).map((review, index) => (
+          <div key={index} className="space-y-3">
             <div className="flex items-start space-x-4">
               {/* Avatar */}
-              <Image 
-                src={review.avatar} 
-                alt={`${review.name}'s profile picture`}
-                width={48}
-                height={48}
-                className="rounded-full object-cover"
-              />
-              
+              {review.avatar ? (
+                <img
+                  src={review.avatar}
+                  alt={review.name}
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center">
+                  <span className="text-white font-semibold">
+                    {review.name.charAt(0)}
+                  </span>
+                </div>
+              )}
+
               <div className="flex-1">
-                {/* Reviewer info and rating */}
-                <div className="flex items-center justify-between mb-2">
+                <div className="mb-2">
                   <h4 className="font-semibold text-gray-900">{review.name}</h4>
-                  {/* YOUR TASK: Add date if available */}
-                  {review.date && (
-                    <span className="text-sm text-gray-500">{review.date}</span>
-                  )}
+                  <p className="text-sm text-gray-500">{review.date}</p>
                 </div>
-                
-                {/* Star rating */}
-                <div className="flex items-center mb-3">
-                  <div className="flex mr-2">
-                    {renderStars(review.rating)}
-                  </div>
-                  <span className="text-sm text-gray-600">({review.rating}/5)</span>
-                </div>
-                
-                {/* Review comment */}
-                <p className="text-gray-700 leading-relaxed">
+                <p className="text-gray-700 text-sm leading-relaxed">
                   {review.comment}
                 </p>
               </div>

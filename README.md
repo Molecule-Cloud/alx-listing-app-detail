@@ -1,273 +1,582 @@
-# Property Detail Page Implementation
+# ALX Listing App
 
-## Project Description
+A responsive property listing page built with **Next.js**, **TypeScript**, and **Tailwind CSS**. The application displays luxury properties with filtering, a hero section, and a clean, user-friendly layout.
 
-This project focuses on implementing a responsive Property Detail Page for a listing application using Next.js and Tailwind CSS. The page dynamically displays comprehensive property information including images, descriptions, amenities, reviews, and a booking section. The implementation follows modern web development practices with reusable components and responsive design principles.
+---
+
+## Table of Contents
+
+- [Project Overview](#project-overview)
+- [Learning Objectives](#learning-objectives)
+- [Requirements](#requirements)
+  - [Technical](#technical-requirements)
+  - [Functional](#functional-requirements)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [Implementation Guide](#implementation-guide)
+  - [1. Project Setup](#1-project-setup)
+  - [2. Data Management](#2-data-management)
+  - [3. Component Implementation](#3-component-implementation)
+  - [4. Page Layout](#4-page-layout)
+  - [5. Hero Section](#5-hero-section)
+  - [6. Filter Section](#6-filter-section)
+  - [7. Listing Section](#7-listing-section)
+- [Best Practices](#best-practices)
+- [Expected Outcomes](#expected-outcomes)
+
+---
+
+## Project Overview
+
+This project is a responsive property listing page that adapts to all screen sizes. It features a hero section, filterable property listings, and a consistent layout with reusable components.
+
+---
 
 ## Learning Objectives
 
-- Implement dynamic routing in Next.js for property detail pages
-- Create reusable React components for property display
-- Structure a responsive layout using Tailwind CSS
-- Manage component state and props effectively
-- Implement interactive elements like date pickers and tabs
-- Display and organize property data in an intuitive UI
-- Follow best practices for component composition
+- Apply responsive web design with Tailwind CSS
+- Create reusable React components for layout
+- Use TypeScript interfaces for type safety
+- Structure a Next.js application
+- Render dynamic data from arrays
+- Implement filtering functionality
+- Break down UI mockups into logical components
+
+---
 
 ## Requirements
 
-### Dynamic Routing
-- Implement `[id].tsx` to handle dynamic property pages
+### Technical Requirements
 
-### Component Structure
-- **PropertyDetail** - main container component
-- **BookingSection** - handles reservation functionality
-- **ReviewSection** - displays user feedback
+- **Framework:** Next.js (React)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Component Structure:** Logical folder hierarchy
+- **Type Safety:** Typed components and props
 
-### Responsive Design
-- Ensure proper display on all screen sizes
+### Functional Requirements
 
-### Data Handling
-- Properly type and manage property data
+- **Header:** Navigation, logo, search, accommodation types
+- **Footer:** Relevant links and information
+- **Layout:** Consistent wrapper for all pages
+- **Hero Section:** Background image, call-to-action text
+- **Filter Section:** Clickable filter pills
+- **Property Listings:** Responsive grid, property cards with image, name, price, rating
 
-### UI Elements
-- Image gallery/grid
-- Amenities listing
-- Rating display
-- Booking form with date selection
-- Review cards with user info
+---
 
-## Best Practices
-
-### Component Design
-- Single Responsibility Principle for components
-- Proper TypeScript typing for props and data
-- Reusable UI components
-
-### Styling
-- Consistent spacing and typography
-- Mobile-first approach
-- Proper use of Tailwind utility classes
-
-### Code Organization
-- Clear folder structure
-- Separation of concerns
-- Proper component composition
-
-### Performance
-- Optimized image display
-- Efficient data handling
-- Lazy loading where appropriate
-
-## Implementation Details
-
-### PropertyDetail.tsx
-The main container component that:
-- Displays property header with name, rating, and location
-- Shows an image grid (with main image prominently displayed)
-- Contains property description in tabbed format
-- Lists amenities with appropriate icons
-- Integrates the BookingSection and ReviewSection
-
-### BookingSection.tsx
-A fixed-position component that:
-- Displays pricing information
-- Provides date selection controls
-- Calculates and shows total cost
-- Includes reservation CTA button
-
-### ReviewSection.tsx
-A component that:
-- Displays all property reviews
-- Shows reviewer avatars and ratings
-- Formats review content properly
-- Handles pagination if needed
-
-## Expected Outcomes
-
-- A fully responsive property detail page
-- Properly structured components that can be reused
-- Clean, maintainable code following best practices
-- Intuitive user interface with all required functionality
-- Proper data handling and typing throughout the application
-
-## Tasks
-
-### 0. Implement Responsive Property Detail Page with Tailwind CSS and Dynamic Components
-**Status:** Mandatory
-
-#### Objective
-The objective of this milestone is to implement the Property Detail Page based on the provided mockup. You will break the page down into sections, create reusable components, and style the layout using Tailwind CSS. By the end of this task, you will have a fully functional, responsive detail page that showcases the property information, including the description, amenities, reviews, and booking section.
-
-#### Instructions
-
-##### 1. Duplicate the Repository
-Duplicate the repository `alx-listing-app-00` and rename it to `alx-listing-app-01`.
-
-##### 2. Folder Structure
-Ensure that the following folder structure exists in your project:
+## Project Structure
 
 ```
-components/property/PropertyDetail.tsx
-components/property/BookingSection.tsx
-components/property/ReviewSection.tsx
+alx-listing-app-00/
+├── components/
+│   └── layout/
+│       ├── Header.tsx
+│       ├── Footer.tsx
+│       └── Layout.tsx
+├── constants/
+│   └── index.ts
+├── interfaces/
+│   └── index.ts
+├── pages/
+│   ├── _app.tsx
+│   └── index.tsx
+├── styles/
+│   └── globals.css
+└── README.md
 ```
 
-##### 3. Create a Property Detail Page
-In `pages/property/[id].tsx`, create a dynamic page to display the details of a property. The `id` will correspond to the property being displayed.
-
-```typescript
-import { PROPERTYLISTINGSAMPLE } from "@/constants/index";
-import { useRouter } from "next/router";
-import PropertyDetail from "@/components/property/PropertyDetail";
-
-export default function PropertyPage() {
-  const router = useRouter();
-  const { id } = router.query;
-  const property = PROPERTYLISTINGSAMPLE.find((item) => item.name === id);
-
-  if (!property) return <p>Property not found</p>;
-
-  return (
-    <div>
-      <PropertyDetail property={property} />
-    </div>
-  );
-}
-```
-
-##### 4. Implement the Property Detail Section
-Create a `PropertyDetail.tsx` component in `components/property/` that takes a property object and renders the following:
-
-- Property name, rating, location
-- A grid of images of the property
-- A description of the property (implement this as tabs to include What we offer, Reviews, About host)
-- List of amenities and services the property offers
-- Booking section on the right, which includes the price, check-in/check-out dates, and total cost
-
-```typescript
-import { PropertyProps } from "@/interfaces/index";
-
-const PropertyDetail: React.FC<{ property: PropertyProps }> = ({ property }) => {
-  return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-4xl font-bold">{property.name}</h1>
-      <div className="flex items-center space-x-2 mt-2">
-        <span className="text-yellow-500">{property.rating} stars</span>
-        <span>{property.address.city}, {property.address.country}</span>
-      </div>
-
-      {/* Image Grid */}
-      <div className="grid grid-cols-2 gap-4 mt-4">
-        <img src={property.image} alt={property.name} className="col-span-2 w-full h-96 object-cover rounded-lg" />
-        {/* Add more images */}
-      </div>
-
-      {/* Description */}
-      <div className="mt-4">
-        <h2 className="text-2xl font-semibold">Description</h2>
-        <p>{property.description}</p>
-      </div>
-
-      {/* Amenities */}
-      <div className="mt-4">
-        <h2 className="text-2xl font-semibold">What this place offers</h2>
-        <ul className="flex flex-wrap space-x-4">
-          {property.category.map((amenity, index) => (
-            <li key={index} className="bg-gray-200 p-2 rounded-md">
-              {amenity}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-};
-
-export default PropertyDetail;
-```
-
-##### 5. Create a Booking Section
-In `components/property/BookingSection.tsx`, create a functional component that displays:
-
-- The nightly price
-- Check-in and check-out date pickers
-- A calculation of total payment (nightly rate × number of nights)
-- A "Reserve now" button
-
-```typescript
-const BookingSection: React.FC<{ price: number }> = ({ price }) => {
-  return (
-    <div className="bg-white p-6 shadow-md rounded-lg">
-      <h3 className="text-xl font-semibold">${price}/night</h3>
-      <div className="mt-4">
-        <label>Check-in</label>
-        <input type="date" className="border p-2 w-full mt-2" />
-      </div>
-      <div className="mt-4">
-        <label>Check-out</label>
-        <input type="date" className="border p-2 w-full mt-2" />
-      </div>
-
-      {/* Total payment */}
-      <div className="mt-4">
-        <p>Total payment: <strong>${price * 7}</strong></p>
-      </div>
-
-      {/* Reserve button */}
-      <button className="mt-4 bg-green-500 text-white py-2 px-4 rounded-md">Reserve now</button>
-    </div>
-  );
-};
-
-export default BookingSection;
-```
-
-##### 6. Create a Review Section
-In `components/property/ReviewSection.tsx`, implement a review section that:
-
-- Maps over an array of reviews and renders each review with the user's name, rating, and review content
-- Reviews should be displayed with the user's profile picture and rating stars
-
-```typescript
-const ReviewSection: React.FC<{ reviews: any[] }> = ({ reviews }) => {
-  return (
-    <div className="mt-8">
-      <h3 className="text-2xl font-semibold">Reviews</h3>
-      {reviews.map((review, index) => (
-        <div key={index} className="border-b pb-4 mb-4">
-          <div className="flex items-center">
-            <img src={review.avatar} alt={review.name} className="w-12 h-12 rounded-full mr-4" />
-            <div>
-              <p className="font-bold">{review.name}</p>
-              <p className="text-yellow-500">{review.rating} stars</p>
-            </div>
-          </div>
-          <p>{review.comment}</p>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-export default ReviewSection;
-```
-
-##### 7. Modify Layout to Include All Sections
-In `pages/property/[id].tsx`, use the PropertyDetail, BookingSection, and ReviewSection components to create a full detail page layout.
-
-Ensure the layout is responsive and adjusts properly for different screen sizes.
+---
 
 ## Getting Started
 
-1. Clone the repository
-2. Install dependencies: `npm install`
-3. Run the development server: `npm run dev`
-4. Open [http://localhost:3000](http://localhost:3000) with your browser
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/your-username/alx-listing-app-00.git
+   cd alx-listing-app-00
+   ```
 
-## Tech Stack
+2. **Install dependencies:**
+   ```sh
+   npm install
+   ```
 
-- **Framework:** Next.js
-- **Styling:** Tailwind CSS
-- **Language:** TypeScript
-- **Components:** React Functional Components
+3. **Run the development server:**
+   ```sh
+   npm run dev
+   ```
+
+---
+
+## Implementation Guide
+
+### 1. Project Setup
+
+- Duplicate the `alx-listing-app` repository and rename it to `alx-listing-app-00`.
+- Create the folder structure as shown above.
+
+### 2. Data Management
+
+- In `constants/index.ts`, export a constant `PROPERTYLISTINGSAMPLE` as an array of property data (see below for sample structure).
+- In `interfaces/index.ts`, define a `PropertyProps` interface for property data.
+
+### 3. Component Implementation
+
+- **Header:** `components/layout/Header.tsx`  
+  Includes logo, navigation, search bar, sign in/up, and accommodation types.
+- **Footer:** `components/layout/Footer.tsx`  
+  Contains relevant links and information.
+- **Layout:** `components/layout/Layout.tsx`  
+  Wraps header, footer, and main content.
+
+  ```typescript
+  // components/layout/Layout.tsx
+  import Header from "./Header";
+  import Footer from "./Footer";
+
+  const Layout: React.FC = ({ children }) => (
+    <>
+      <Header />
+      <main className="min-h-screen">{children}</main>
+      <Footer />
+    </>
+  );
+
+  export default Layout;
+  ```
+
+### 4. Page Layout
+
+- In `pages/_app.tsx`, wrap all pages with the `Layout` component:
+
+  ```typescript
+  // pages/_app.tsx
+  import Layout from "@/components/layout/Layout";
+  import "@/styles/globals.css";
+  import type { AppProps } from "next/app";
+
+  export default function App({ Component, pageProps }: AppProps) {
+    return (
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    );
+  }
+  ```
+
+### 5. Hero Section
+
+- In `pages/index.tsx`, add a hero section with a background image and headings:
+  - “Find your favorite place here!”
+  - “The best prices for over 2 million properties worldwide.”
+- Import your background image from `constants` before using it.
+
+### 6. Filter Section
+
+- Implement a filter section with predefined filters (e.g., Top Villa, Self Checkin).
+- Create a `Pill` component that renders clickable filter pills.
+- Map over an array of filter labels to display them.
+
+### 7. Listing Section
+
+- In `pages/index.tsx`, map over `PROPERTYLISTINGSAMPLE` to render property cards.
+- Each card should show the image, name, price, and rating.
+
+---
+
+## Best Practices
+
+- **Component Organization:**  
+  Use a consistent folder structure. Keep components small and focused.
+- **Styling:**  
+  Use Tailwind utility classes. Implement mobile-first responsive design.
+- **TypeScript:**  
+  Define clear interfaces for all props. Type all components and functions.
+- **Performance:**  
+  Optimize images, use loading states, and consider lazy loading.
+- **Accessibility:**  
+  Use semantic HTML, proper contrast, alt text for images, and keyboard navigation.
+
+---
+
+## Expected Outcomes
+
+- Fully responsive property listing page
+- Clean, maintainable code with TypeScript
+- Reusable layout components
+- Properly structured property data
+- Functional filter components
+- Visually appealing, consistent UI
+
+---
+
+## Sample Property Data Structure
+
+```typescript
+// constants/index.ts
+export const PROPERTYLISTINGSAMPLE: PropertyProps []  =  [
+  {
+    name: "Villa Ocean Breeze",
+    address: {
+      state: "Seminyak",
+      city: "Bali",
+      country: "Indonesia"
+    },
+    rating: 4.89,
+    category: ["Luxury Villa", "Pool", "Free Parking"],
+    price: 3200,
+    offers: {
+      bed: "3",
+      shower: "3",
+      occupants: "4-6"
+    },
+    image: "https://example.com/image1.jpg",
+    discount: ""
+  },
+  {
+    name: "Mountain Escape Chalet",
+    address: {
+      state: "Aspen",
+      city: "Colorado",
+      country: "USA"
+    },
+    rating: 4.70,
+    category: ["Mountain View", "Fireplace", "Self Checkin"],
+    price: 1800,
+    offers: {
+      bed: "4",
+      shower: "2",
+      occupants: "5-7"
+    },
+    image: "https://example.com/image2.jpg",
+    discount: "30"
+  },
+  {
+    name: "Cozy Desert Retreat",
+    address: {
+      state: "Palm Springs",
+      city: "California",
+      country: "USA"
+    },
+    rating: 4.92,
+    category: ["Desert View", "Pet Friendly", "Self Checkin"],
+    price: 1500,
+    offers: {
+      bed: "2",
+      shower: "1",
+      occupants: "2-3"
+    },
+    image: "https://example.com/image3.jpg",
+    discount: ""
+  },
+  {
+    name: "City Lights Penthouse",
+    address: {
+      state: "New York",
+      city: "New York",
+      country: "USA"
+    },
+    rating: 4.85,
+    category: ["City View", "Free WiFi", "24h Checkin"],
+    price: 4500,
+    offers: {
+      bed: "2",
+      shower: "2",
+      occupants: "2-4"
+    },
+    image: "https://example.com/image4.jpg",
+    discount: "15"
+  },
+  {
+    name: "Riverside Cabin",
+    address: {
+      state: "Queenstown",
+      city: "Otago",
+      country: "New Zealand"
+    },
+    rating: 4.77,
+    category: ["Riverside", "Private Dock", "Free Kayaks"],
+    price: 2800,
+    offers: {
+      bed: "3",
+      shower: "2",
+      occupants: "4-6"
+    },
+    image: "https://example.com/image5.jpg",
+    discount: "20"
+  },
+  {
+    name: "Modern Beachfront Villa",
+    address: {
+      state: "Sidemen",
+      city: "Bali",
+      country: "Indonesia"
+    },
+    rating: 4.95,
+    category: ["Beachfront", "Private Pool", "Chef Service"],
+    price: 5000,
+    offers: {
+      bed: "5",
+      shower: "4",
+      occupants: "8-10"
+    },
+    image: "https://example.com/image6.jpg",
+    discount: ""
+  },
+  {
+    name: "Lakeside Chalet",
+    address: {
+      state: "Banff",
+      city: "Alberta",
+      country: "Canada"
+    },
+    rating: 4.65,
+    category: ["Lakeside", "Mountain View", "Hiking Trails"],
+    price: 2300,
+    offers: {
+      bed: "3",
+      shower: "3",
+      occupants: "4-5"
+    },
+    image: "https://example.com/image7.jpg",
+    discount: "10"
+  },
+  {
+    name: "Tropical Garden Villa",
+    address: {
+      state: "Koh Samui",
+      city: "Surat Thani",
+      country: "Thailand"
+    },
+    rating: 4.80,
+    category: ["Garden", "Free Parking", "Self Checkin"],
+    price: 2750,
+    offers: {
+      bed: "3",
+      shower: "3",
+      occupants: "5-6"
+    },
+    image: "https://example.com/image8.jpg",
+    discount: "25"
+  },
+  {
+    name: "Urban Loft",
+    address: {
+      state: "Berlin",
+      city: "Berlin",
+      country: "Germany"
+    },
+    rating: 4.60,
+    category: ["City Center", "Free WiFi", "24h Checkin"],
+    price: 2000,
+    offers: {
+      bed: "2",
+      shower: "1",
+      occupants: "2-3"
+    },
+    image: "https://example.com/image9.jpg",
+    discount: ""
+  },
+  {
+    name: "Secluded Forest Cabin",
+    address: {
+      state: "Whistler",
+      city: "British Columbia",
+      country: "Canada"
+    },
+    rating: 4.72,
+    category: ["Secluded", "Hot Tub", "Self Checkin"],
+    price: 2600,
+    offers: {
+      bed: "4",
+      shower: "2",
+      occupants: "5-7"
+    },
+    image: "https://example.com/image10.jpg",
+    discount: "40"
+  },
+  {
+    name: "Cliffside Villa",
+    address: {
+      state: "Amalfi",
+      city: "Salerno",
+      country: "Italy"
+    },
+    rating: 4.93,
+    category: ["Cliffside", "Infinity Pool", "Sea View"],
+    price: 6000,
+    offers: {
+      bed: "4",
+      shower: "4",
+      occupants: "6-8"
+    },
+    image: "https://example.com/image11.jpg",
+    discount: "50"
+  },
+  {
+    name: "Coastal Escape Villa",
+    address: {
+      state: "Noosa",
+      city: "Queensland",
+      country: "Australia"
+    },
+    rating: 4.83,
+    category: ["Beachfront", "Pet Friendly", "Free Parking"],
+    price: 3400,
+    offers: {
+      bed: "3",
+      shower: "3",
+      occupants: "4-6"
+    },
+    image: "https://example.com/image12.jpg",
+    discount: ""
+  },
+  {
+    name: "Historical Villa",
+    address: {
+      state: "Florence",
+      city: "Tuscany",
+      country: "Italy"
+    },
+    rating: 4.67,
+    category: ["Historical", "Free Breakfast", "Self Checkin"],
+    price: 2700,
+    offers: {
+      bed: "2",
+      shower: "2",
+      occupants: "2-4"
+    },
+    image: "https://example.com/image13.jpg",
+    discount: "35"
+  },
+  {
+    name: "Downtown Apartment",
+    address: {
+      state: "Tokyo",
+      city: "Tokyo",
+      country: "Japan"
+    },
+    rating: 4.81,
+    category: ["City Center", "Free WiFi", "Public Transport"],
+    price: 2200,
+    offers: {
+      bed: "1",
+      shower: "1",
+      occupants: "2"
+    },
+    image: "https://example.com/image14.jpg",
+    discount: ""
+  },
+  {
+    name: "Luxury Safari Lodge",
+    address: {
+      state: "Serengeti",
+      city: "Mara",
+      country: "Tanzania"
+    },
+    rating: 4.97,
+    category: ["Safari", "Guided Tours", "Free Breakfast"],
+    price: 4500,
+    offers: {
+      bed: "4",
+      shower: "4",
+      occupants: "6-8"
+    },
+    image: "https://example.com/image15.jpg",
+    discount: "20"
+  },
+  {
+    name: "Countryside Cottage",
+    address: {
+      state: "Cotswolds",
+      city: "Gloucestershire",
+      country: "UK"
+    },
+    rating: 4.58,
+    category: ["Countryside", "Fireplace", "Self Checkin"],
+    price: 1800,
+    offers: {
+      bed: "2",
+      shower: "1",
+      occupants: "2-4"
+    },
+    image: "https://example.com/image16.jpg",
+    discount: "25"
+  },
+  {
+    name: "Riverfront Mansion",
+    address: {
+      state: "Paris",
+      city: "Île-de-France",
+      country: "France"
+    },
+    rating: 4.86,
+    category: ["Riverfront", "Private Garden", "Self Checkin"],
+    price: 5000,
+    offers: {
+      bed: "4",
+      shower: "3",
+      occupants: "6-8"
+    },
+    image: "https://example.com/image17.jpg",
+    discount: "30"
+  },
+  {
+    name: "Ski Chalet",
+    address: {
+      state: "Zermatt",
+      city: "Valais",
+      country: "Switzerland"
+    },
+    rating: 4.75,
+    category: ["Mountain View", "Ski Access", "Fireplace"],
+    price: 3900,
+    offers: {
+      bed: "3",
+      shower: "3",
+      occupants: "4-5"
+    },
+    image: "https://example.com/image18.jpg",
+    discount: ""
+  },
+  {
+    name: "Island Paradise Villa",
+    address: {
+      state: "Mahe",
+      city: "Victoria",
+      country: "Seychelles"
+    },
+    rating: 4.98,
+    category: ["Beachfront", "Private Pool", "Chef Service"],
+    price: 6500,
+    offers: {
+      bed: "5",
+      shower: "5",
+      occupants: "8-10"
+    },
+    image: "https://example.com/image19.jpg",
+    discount: "60"
+  },
+  {
+    name: "Clifftop Retreat",
+    address: {
+      state: "Cape Town",
+      city: "Western Cape",
+      country: "South Africa"
+    },
+    rating: 4.78,
+    category: ["Ocean View", "Private Pool", "Self Checkin"],
+    price: 4100,
+    offers: {
+      bed: "3",
+      shower: "3",
+      occupants: "4-5"
+    },
+    image: "https://example.com/image20.jpg",
+    discount: ""
+  }
+];
+
+---
+
+Happy coding!

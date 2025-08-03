@@ -3,13 +3,13 @@ import Footer from "./Footer";
 
 const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
     return (
-        <>
+        <div className="min-h-screen w-full">
             <Header />
-            <main className="min-h-screen">
+            <main className="w-full">
                 {children}
             </main>
             <Footer />
-        </>
+        </div>
     )
 }
 

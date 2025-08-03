@@ -1,7 +1,24 @@
-import { PropertyProps } from "@/interfaces";
-
+import { PropertyProps, } from "@/interfaces";
 
 export const PROPERTYLISTINGSAMPLE = [
+  {
+    name: "Villa Arrecife Beach House",
+    address: {
+      state: "Seminyak",
+      city: "Bali",
+      country: "Indonesia",
+    },
+    rating: 4.76,
+    category: ["Luxury Villa", "Pool", "Free Parking"],
+    price: 2500,
+    offers: {
+      bed: "3",
+      shower: "3",
+      occupants: "4-6"
+    },
+    image: "/assets/images/villlarrecife.png",
+    discount: ""
+  },
   {
     name: "Villa Ocean Breeze",
     address: {
@@ -360,7 +377,8 @@ export const PROPERTYLISTINGSAMPLE = [
       occupants: "4-5"
     },
     image: "/assets/images/privateroom.png",
-    discount: ""
+    discount: "",
+    reviews: "Hello review"
   }
 ];
 // ...existing code...
@@ -380,29 +398,34 @@ export const FILTERS = [
 
 export const SAMPLE_REVIEWS = [
   {
-    name: "Sarah Johnson",
-    avatar: "",
+    name: "Kerry",
+    avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b789?w=50&h=50&fit=crop&crop=face",
     rating: 5,
-    comment: "This is a comment",
-    date: "March 2024"
+    comment: "I simply don't have the words to describe how incredibly beautiful the villa and its surroundings are. This is a wonderful remote spot that is simply breathtaking.",
+    date: "March 2024 • Family trip"
   },
-
   {
-    name: "Sarah Johnson",
-    avatar: "",
+    name: "Pooja",
+    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=50&h=50&fit=crop&crop=face",
     rating: 5,
-    comment: "This is a comment",
-    date: "March 2024"
+    comment: "We stayed at this home for a family vacation of 7 adults (including 3 couples, 1 baby) and had a fantastic stay. The house was BEAUTIFUL and honestly better than shown in pictures.",
+    date: "March 2024 • Family trip"
   },
-  
   {
-    name: "Sarah Johnson",
-    avatar: "",
+    name: "Cindy & Ben",
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face",
     rating: 5,
-    comment: "This is a comment",
-    date: "March 2024"
+    comment: "I simply don't have the words to describe how incredibly beautiful the villa and its surroundings are. This is a wonderful remote spot that is simply breathtaking.",
+    date: "August 2023 • Family trip"
+  },
+  {
+    name: "Marnie",
+    avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=50&h=50&fit=crop&crop=face",
+    rating: 5,
+    comment: "We stayed at this home for a family vacation of 7 adults (including 3 couples, 1 baby) and had a fantastic stay. The house was BEAUTIFUL and honestly better than shown in pictures.",
+    date: "January 2023 • Family trip"
   }
-]
+];
 
 
 
